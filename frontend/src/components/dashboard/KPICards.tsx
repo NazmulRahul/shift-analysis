@@ -23,7 +23,7 @@ export const KPICards: React.FC<KPICardsProps> = ({ summary }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 text-[var(--foreground)]">
       {/* 1. Operational Efficiency Gauge Card */}
-      <div className="p-6 rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm flex flex-col md:flex-row items-center gap-6">
+      <div className="p-6 rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm flex flex-col md:flex-row items-center gap-4 overflow-hidden">
         <div className="relative shrink-0 w-28 h-28 flex items-center justify-center">
           <svg className="w-full h-full transform" viewBox="0 0 120 120">
             {/* Background Circle */}
@@ -56,19 +56,19 @@ export const KPICards: React.FC<KPICardsProps> = ({ summary }) => {
             <span className="text-[10px] uppercase font-bold tracking-wider text-[var(--muted-foreground)]">Score</span>
           </div>
         </div>
-        <div className="flex-1 space-y-1.5 text-center md:text-left">
-          <h3 className="font-bold text-sm text-[var(--muted-foreground)] uppercase tracking-wider">Efficiency Score</h3>
+        <div className="flex-1 min-w-0 space-y-1.5 text-center md:text-left">
+          <h3 className="font-bold text-sm text-[var(--muted-foreground)] uppercase tracking-wider leading-tight">Efficiency Score</h3>
           <div className="flex flex-col gap-1 items-center md:items-start text-xs pt-1">
             <div className="flex items-center gap-1.5 text-emerald-500 font-semibold">
-              <Clock size={12} />
+              <Clock size={12} className="shrink-0" />
               <span>Prod: <strong>{efficiency.productive_hours}h</strong></span>
             </div>
             <div className="flex items-center gap-1.5 text-red-500 font-semibold">
-              <Clock size={12} />
+              <Clock size={12} className="shrink-0" />
               <span>Downtime: <strong>{efficiency.unproductive_hours}h</strong></span>
             </div>
           </div>
-          <p className="text-[10px] text-[var(--muted-foreground)] pt-1">Ratio of productive hours to total shift hours</p>
+          <p className="text-[10px] text-[var(--muted-foreground)] pt-1 leading-snug">Ratio of productive hours to total shift hours</p>
         </div>
       </div>
 
