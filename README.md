@@ -4,7 +4,7 @@ A high-performance, full-stack analytics platform built to help operations teams
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
 * **Interactive Operations Dashboard**: High-fidelity visualizations of shift timelines, activity distributions, and hourly operational patterns.
 * **Granular Filters**: Slice and dice datasets by date range, activity reason, shift duration, hour of day, weekday, month, and data validity.
@@ -16,7 +16,7 @@ A high-performance, full-stack analytics platform built to help operations teams
 
 ---
 
-## 📸 Application Screenshots
+## Application Screenshots
 
 Here are some screenshots showcasing the platform's interfaces and visual features:
 
@@ -42,7 +42,7 @@ Enables plant managers to upload datasets with safety confirmation warnings.
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 The platform follows a clean, decoupling architecture separating the React client from the Django service layers:
 
@@ -77,7 +77,7 @@ The platform follows a clean, decoupling architecture separating the React clien
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 ### Frontend
 * **Core**: React 19, TypeScript, Vite 8, React Router v7
@@ -94,7 +94,7 @@ The platform follows a clean, decoupling architecture separating the React clien
 
 ---
 
-## 💻 Local Setup & Installation
+## Local Setup & Installation
 
 ### Prerequisites
 * Node.js v20+
@@ -170,7 +170,7 @@ The frontend application is running at `http://localhost:5173/`.
 
 ---
 
-## 🧪 Running Tests
+## Running Tests
 
 ### Backend Unit Tests
 To run Django backend tests:
@@ -189,7 +189,7 @@ npm run lint
 
 ---
 
-## 🔗 API Documentation
+## API Documentation
 
 The Django REST API exposes the following RESTful HTTP JSON endpoints:
 
@@ -206,7 +206,7 @@ The Django REST API exposes the following RESTful HTTP JSON endpoints:
 
 ---
 
-## 📊 Data Quality Validations
+## Data Quality Validations
 
 Our robust cleaner checks each record against five categories of data inconsistencies:
 1. **Missing Critical Values**: Missing Date or Activity Reason automatically excludes the row.
