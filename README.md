@@ -16,6 +16,32 @@ A high-performance, full-stack analytics platform built to help operations teams
 
 ---
 
+## 📸 Application Screenshots
+
+Here are some screenshots showcasing the platform's interfaces and visual features:
+
+### 1. Operations Analytics Dashboard (Light Theme)
+Interactive KPIs, circular gauges, breakdown frequency charts, timeline distribution, and auto-generated data insights.
+![Operations Dashboard Main](screenshots/dashboard_main.png)
+
+### 2. Operations Analytics Dashboard (Dark Theme)
+Premium dark mode interface with matching styles, charts, and colors.
+![Operations Dashboard Dark](screenshots/dark_mode_dashboard.png)
+
+### 3. Breakdown Streaks Detection
+Calculates consecutive breakdown occurrences and classifies them by duration and length severity.
+![Breakdown Streaks Table](screenshots/breakdown_streaks.png)
+
+### 4. Data Quality & Anomaly Log
+Logs missing fields, invalid durations, duplicates, and timestamp overlaps with suggested fixes.
+![Data Quality Issues Table](screenshots/data_quality.png)
+
+### 5. Interactive CSV Ingestion Dropzone
+Enables plant managers to upload datasets with safety confirmation warnings.
+![Dataset Ingestion Interface](screenshots/theme_toggled_upload.png)
+
+---
+
 ## 🏗️ System Architecture
 
 The platform follows a clean, decoupling architecture separating the React client from the Django service layers:
