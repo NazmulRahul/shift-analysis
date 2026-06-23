@@ -97,20 +97,70 @@ The platform follows a clean, decoupling architecture separating the React clien
 ## Local Setup & Installation
 
 ### Prerequisites
+
+**For Docker (Recommended)**
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/) v4.0+ (includes Docker Compose)
+
+**For Manual Setup**
 * Node.js v20+
 * Python 3.11+
-* Docker & Docker Compose (optional, for PG setup)
+
+---
 
 ### Option A: Running with Docker Compose (Recommended)
 
-To stand up the database, backend services, and frontend bundle with one command:
+This is the easiest way to run the full stack — no Python or Node.js installation required.
 
+#### Step 1 — Clone the repository
+```bash
+git clone <your-repo-url>
+cd shift-analysis
+```
+
+#### Step 2 — Build and start all containers
 ```bash
 docker-compose up --build
 ```
-* **Frontend**: Accessible at `http://localhost:3000/`
-* **Backend API**: Accessible at `http://localhost:8000/api/`
-* **PostgreSQL**: Bound to `localhost:5432`
+
+This will start three containers:
+| Service | URL | Description |
+|---------|-----|-------------|
+| Frontend | `http://localhost:3000` | React dashboard |
+| Backend API | `http://localhost:8000/api/` | Django REST API |
+| PostgreSQL | `localhost:5433` | Database (internal port 5432) |
+
+> First build takes 2–5 minutes to download images and install dependencies. Subsequent starts are fast.
+
+#### Step 3 — Upload your shift data
+
+The database starts **empty**. You must upload a CSV file to see data in the dashboard.
+
+1. Open `http://localhost:3000` in your browser
+2. Click the **Upload CSV** button in the top navigation bar
+3. Select your shift data CSV file (see [CSV Format](#csv-format) below)
+4. The dashboard will automatically populate with your data
+
+#### Step 4 — Stop the containers
+```bash
+docker-compose down
+```
+
+To also delete the database volume (reset all data):
+```bash
+docker-compose down -v
+```
+
+---
+
+#### Troubleshooting
+
+**Port conflict on 5432?** If you already have a local PostgreSQL running, the DB container is pre-configured to use external port `5433` to avoid conflicts.
+
+**Containers not starting?** Make sure Docker Desktop is running, then try:
+```bash
+docker-compose down -v
+docker-compose up --build
+```
 
 ---
 
@@ -214,3 +264,21 @@ Our robust cleaner checks each record against five categories of data inconsiste
 3. **Timestamp Inversions**: End time before Start time is flagged and excluded from active analytics.
 4. **Duplicate Records**: Multiple identical rows (date, start time, end time, reason) are identified and de-duplicated.
 5. **Overlapping Shifts**: Active shift periods that overlap are flagged to prevent inflated duration calculations.
+
+---
+
+## CSV Format
+
+When uploading a CSV file, it must include the following columns (column names are case-insensitive):
+
+| Column | Required | Description | Example |
+|--------|----------|-------------|---------|
+| `DAY_DATE` | Yes | Date of the shift | `2025-10-01` |
+| `START` | No | Shift start time | `08:00` or `2025-10-01 08:00:00` |
+| `END` | No | Shift end time | `16:00` or `2025-10-01 16:00:00` |
+| `DURATION` | No | Shift duration in hours | `8.0` |
+| `ACTIVITY_REASON` | Yes | Reason/type of shift activity | `BREAKDOWN` |
+
+> If `START`/`END` are missing but `DURATION` is present, the cleaner will use the duration value directly. If both are present, the duration is recalculated from timestamps for accuracy.
+
+A sample file `shift_data.csv` is included in the repository root for testing.
