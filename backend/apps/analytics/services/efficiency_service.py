@@ -17,10 +17,11 @@ class EfficiencyService:
 
         total_hours = queryset.aggregate(total=Sum('duration'))['total'] or 0.0
         
-        # Productive hours = total hours minus unproductive hours
-        unproductive_hours = queryset.filter(
-            activity_reason__in=[r.lower() for r in unproductive_reasons]
-        ).aggregate(total=Sum('duration'))['total'] or 0.0
+        from django.db.models import Q
+        unproductive_filter = Q()
+        for r in unproductive_reasons:
+            unproductive_filter |= Q(activity_reason__iexact=r)
+        unproductive_hours = queryset.filter(unproductive_filter).aggregate(total=Sum('duration'))['total'] or 0.0
         
         # Or filter where activity is NOT in the unproductive reasons list (case-insensitive)
         # However, to support arbitrary case sensitivity in DB cleanly, we can do:
@@ -51,43 +52,7 @@ class EfficiencyService:
 
         unproductive_reasons = ['breakdown', 'unknown failure', 'unknown_failure', 'unknown']
 
-        # Determine grouping field
-        if granularity == 'weekly':
-            trunc_func = TruncWeek('date')
-        elif granularity == 'monthly':
-            trunc_func = TruncMonth('date')
-        else:
-            trunc_func = TruncDate('date')
-
-        # Group and aggregate total hours
-        grouped_records = queryset.annotate(period=trunc_func).values('period').annotate(
-            total=Sum('duration')
-        ).order_by('period')
-
         trend_data = []
-
-        for group in grouped_records:
-            period = group['period']
-            if not period:
-                continue
-
-            total_h = group['total'] or 0.0
-            
-            # Aggregate unproductive hours for this period
-            unprod_h = queryset.filter(
-                date=period if granularity == 'daily' else queryset.filter(is_valid=True), # placeholder check
-                activity_reason__in=[r.lower() for r in unproductive_reasons]
-            )
-            
-            # Better way: calculate in Python using a queryset values list to avoid N+1 queries
-            # Let's write a clean and fast in-memory aggregator using pandas or pure Python
-            # since the dataset is typically moderate (thousands of rows).
-            # This is extremely fast and robust.
-            
-        # Let's fetch all records for the queryset and do grouping in memory!
-        # This avoids complex database-specific date functions (SQLite vs Postgres behave differently for TruncWeek/TruncMonth)
-        # By doing it in Python, we ensure 100% database-agnostic behavior!
-        
         all_records = list(queryset.values('date', 'duration', 'activity_reason'))
         if not all_records:
             return []
