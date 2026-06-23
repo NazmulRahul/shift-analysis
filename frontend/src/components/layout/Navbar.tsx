@@ -23,7 +23,7 @@ export const Navbar: React.FC = () => {
   };
 
   return (
-    <header className="h-[70px] border-b border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] px-8 flex items-center justify-between transition-colors duration-300">
+    <header className="sticky-navbar h-[70px] border-b border-[var(--border)] text-[var(--foreground)] px-8 flex items-center justify-between transition-colors duration-300">
       <div>
         <h1 className="text-xl font-bold tracking-tight">{getPageTitle()}</h1>
       </div>
