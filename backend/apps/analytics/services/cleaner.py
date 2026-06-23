@@ -22,9 +22,9 @@ class CSVProcessor:
 
         # Expected normalized columns mapping
         col_mapping = {
-            'date': ['date'],
-            'start_time': ['shift start date/time', 'start date/time', 'start_time', 'start time', 'shift start'],
-            'end_time': ['shift end date/time', 'end date/time', 'end_time', 'end time', 'shift end'],
+            'date': ['date', 'day_date', 'day date', 'shift_date', 'shift date'],
+            'start_time': ['shift start date/time', 'start date/time', 'start_time', 'start time', 'shift start', 'start'],
+            'end_time': ['shift end date/time', 'end date/time', 'end_time', 'end time', 'shift end', 'end'],
             'duration': ['duration', 'duration (hours)', 'duration_hours', 'hours'],
             'activity_reason': ['activity reason', 'activity_reason', 'reason', 'activity']
         }
